@@ -1,0 +1,57 @@
+# Teaching/demo deployment. No automatic deployments on subsequent pushes.
+services:
+  - type: web
+    name: powertrack-demo
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile.render
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeployTrigger: 'off'
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: PUBLIC_ORIGIN
+        sync: false
+      - key: COOKIE_SECURE
+        value: 'true'
+      - key: COOKIE_SAMESITE
+        value: lax
+      - key: AUTH_COOKIE_NAME
+        value: __Host-powertrack_access_token
+      - key: WEB_CONCURRENCY
+        value: '1'
+      - key: JWT_SECRET_KEY
+        sync: false
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: powertrack-cache
+          property: connectionString
+      - key: REDIS_ALLOW_PASSWORDLESS_PRIVATE
+        value: 'true'
+      - key: GOOGLE_CREDENTIALS_PATH
+        value: /etc/secrets/google-service-account.json
+      - key: GOOGLE_SPREADSHEET_ID
+        sync: false
+      - key: GOOGLE_OAUTH_CLIENT_ID
+        sync: false
+      - key: GOOGLE_OAUTH_CLIENT_SECRET
+        sync: false
+      - key: GOOGLE_OAUTH_REDIRECT_URI
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3.5-flash-lite
+      - key: ADVICE_PROVIDER_RPM
+        value: '10'
+      - key: ADVICE_PROVIDER_DAILY_LIMIT
+        value: '100'
+  - type: keyvalue
+    name: powertrack-cache
+    plan: free
+    region: singapore
+    maxmemoryPolicy: noeviction
+    ipAllowList: []

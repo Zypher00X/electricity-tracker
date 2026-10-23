@@ -1,0 +1,54 @@
+# Git
+.git
+.gitignore
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules
+**/node_modules
+
+# Build outputs
+dist
+build
+**/dist
+**/build
+
+# Logs
+*.log
+logs
+
+# Python - เผื่อ Backend ใช้ Python ภายหลัง
+__pycache__
+*.pyc
+*.pyo
+.venv
+venv
+
+# IDE
+.vscode
+.idea
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+Dockerfile*
+compose*.yaml
+compose*.yml
+.venv-security
+.deepeval
+.pytest_cache
+tmp
+tests/__pycache__
+**/credentials
+**/*.pem
+**/*.key
+Docker
+
+**/*service-account*.json
+**/*credentials*.json

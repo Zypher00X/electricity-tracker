@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ตั้งค่าที่พักและค่าไฟ | PowerTrack</title>
+    <link
+      rel="stylesheet"
+      href="/frontend/settings/settings.css?v=20261021-api-1"
+    />
+  </head>
+  <body>
+    <div class="app-layout">
+      <aside class="sidebar">
+        <a href="/dashboard" class="brand"
+          ><span class="brand-icon">ϟ</span>PowerTrack</a
+        >
+        <nav aria-label="เมนูหลัก">
+          <a href="/dashboard"><span>⌂</span>หน้าหลัก</a
+          ><a href="/add-electricity"><span>▣</span>เพิ่มข้อมูลค่าไฟ</a
+          ><a href="/frontend/history/history.html"
+            ><span>▤</span>ประวัติข้อมูล</a
+          ><a href="/frontend/appliances/appliances.html"
+            ><span>◉</span>เครื่องใช้ไฟฟ้า</a
+          ><a href="/frontend/analysis/analysis.html"
+            ><span>▧</span>วิเคราะห์ข้อมูล</a
+          ><a href="/frontend/analysis/analysis.html#charts"
+            ><span>▥</span>กราฟ</a
+          ><a href="/frontend/advice/advice.html"><span>♙</span>คำแนะนำ</a
+          ><a
+            href="/frontend/settings/settings.html"
+            class="active"
+            aria-current="page"
+            ><span>⚙</span>ตั้งค่า</a
+          >
+        </nav>
+        <div class="sidebar-user">
+          <span class="avatar">U</span>
+          <div><strong id="settingsUser">กำลังโหลด...</strong><small>PowerTrack</small></div>
+        </div>
+      </aside>
+      <main>
+        <header class="settings-header">
+          <div>
+            <p class="eyebrow">ให้การวิเคราะห์เข้าใจการอยู่อาศัยของคุณ</p>
+            <h1>ตั้งค่าที่พักและค่าไฟ</h1>
+            <p class="subtitle">
+              เพิ่มบริบทที่พัก ค่าตั้งต้น และเป้าหมายค่าไฟ
+              เพื่อเตรียมข้อมูลสำหรับคำแนะนำในอนาคต
+            </p>
+          </div>
+          
+        </header>
+        <div class="prototype-note">
+          <span aria-hidden="true">◌</span>
+          <p>
+            การตั้งค่าเป็นข้อมูลเฉพาะบัญชีของคุณ
+            ค่าตั้งต้นที่แก้ไขไม่เปลี่ยนยอดบิลที่บันทึกไว้แล้ว
+          </p>
+        </div>
+        <p id="settingsStatus" role="status" aria-live="polite">กำลังโหลดการตั้งค่า...</p><button type="button" class="reset-button" id="settingsRetry" hidden>โหลดข้อมูลล่าสุด / ลองใหม่</button><div class="settings-layout">
+          <form id="settingsForm">
+            <section class="settings-card">
+              <div class="section-heading">
+                <span class="section-icon" aria-hidden="true">⌂</span>
+                <div>
+                  <h2>ข้อมูลที่พัก</h2>
+                  <p>ช่วยให้เข้าใจขนาดครัวเรือนและบริบทการใช้ไฟ</p>
+                </div>
+                <span class="step-number">01</span>
+              </div>
+              <div class="field">
+                <label for="residenceType">ประเภทที่พัก</label
+                ><select id="residenceType" name="residence_type">
+                  <option value="unknown">ยังไม่ระบุ</option>
+                  <option value="dormitory">หอพัก</option>
+                  <option value="apartment">อพาร์ตเมนต์ / คอนโด</option>
+                  <option value="house">บ้าน</option>
+                  <option value="other">อื่น ๆ</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="occupants"
+                  >จำนวนผู้อาศัย <span class="optional">ไม่บังคับ</span></label
+                >
+                <div class="input-unit">
+                  <input
+                    id="occupants"
+                    max="1000"
+                    name="occupants"
+                    type="number"
+                    min="1"
+                    step="1"
+                    placeholder="เช่น 2"
+                    inputmode="numeric"
+                  /><span>คน</span>
+                </div>
+                <small>รวมตัวคุณเองและผู้ที่พักอาศัยร่วมกันเป็นประจำ</small>
+              </div>
+            </section>
+            <section class="settings-card">
+              <div class="section-heading">
+                <span class="section-icon" aria-hidden="true">ϟ</span>
+                <div>
+                  <h2>ราคาตั้งต้น</h2>
+                  <p>เก็บค่าตั้งต้นไว้สำหรับเชื่อมใช้งานในส่วนอื่นต่อไป</p>
+                </div>
+                <span class="step-number">02</span>
+              </div>
+              <div class="field-grid">
+                <div class="field">
+                  <label for="unitPrice"
+                    >ค่าไฟต่อหน่วย <span class="optional">ถ้าทราบ</span></label
+                  >
+                  <div class="input-unit">
+                    <input
+                      id="unitPrice"
+                      max="10000"
+                      name="default_unit_price"
+                      type="number"
+                      min="0.0001"
+                      step="0.0001"
+                      placeholder="เช่น 8.0000"
+                      inputmode="decimal"
+                    /><span>บาท / kWh</span>
+                  </div>
+                  <small>รองรับทศนิยมไม่เกิน 4 ตำแหน่ง</small>
+                </div>
+                <div class="field">
+                  <label for="serviceCharge"
+                    >ค่าบริการตั้งต้น
+                    <span class="optional">ถ้าทราบ</span></label
+                  >
+                  <div class="input-unit">
+                    <input
+                      id="serviceCharge"
+                      max="1000000"
+                      name="default_service_charge"
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      placeholder="เช่น 50.00"
+                      inputmode="decimal"
+                    /><span>บาท</span>
+                  </div>
+                  <small>กรอก 0 ได้ หากไม่มีค่าบริการ</small>
+                </div>
+              </div>
+              <p class="info-note">
+                เมื่อเชื่อมระบบแล้ว ค่าตั้งต้นจะช่วยกรอกบิลใหม่
+                โดยราคาและค่าใช้จ่ายในบิลเก่าจะไม่เปลี่ยนตาม
+              </p>
+            </section>
+            <section class="settings-card">
+              <div class="section-heading">
+                <span class="section-icon" aria-hidden="true">◎</span>
+                <div>
+                  <h2>งบค่าไฟรายเดือน</h2>
+                  <p>กำหนดเป้าหมายค่าใช้จ่ายที่เหมาะกับคุณ</p>
+                </div>
+                <span class="step-number">03</span>
+              </div>
+              <div class="field">
+                <label for="monthlyBudget"
+                  >งบค่าไฟต่อเดือน
+                  <span class="optional">ไม่บังคับ</span></label
+                >
+                <div class="input-unit">
+                  <input
+                    id="monthlyBudget"
+                    max="1000000000"
+                    name="monthly_budget"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    placeholder="เช่น 1500.00"
+                    inputmode="decimal"
+                  /><span>บาท / เดือน</span>
+                </div>
+                <small
+                  >เว้นว่างได้หากยังไม่กำหนดงบ ค่าว่างหมายถึง “ยังไม่ระบุ” ส่วน
+                  0 หมายถึงตั้งงบไว้ที่ 0 บาท</small
+                >
+              </div>
+            </section>
+            <p id="settingsError" class="error-message" role="alert" hidden></p>
+            <p
+              id="settingsSuccess"
+              class="success-message"
+              role="status"
+              hidden
+            ></p>
+            <div class="settings-actions">
+              <button type="submit" class="save-button">
+                ✓ บันทึกการตั้งค่า</button
+              ><button type="button" id="resetSettings" class="reset-button">
+                คืนค่าที่บันทึกไว้
+              </button>
+            </div>
+            <p class="save-hint">
+              การเปลี่ยนแปลงจะมีผลเมื่อกดบันทึกเท่านั้น
+            </p>
+          </form>
+          <aside class="summary-column">
+            <section class="settings-card summary-card">
+              <div class="summary-heading">
+                <span class="section-icon" aria-hidden="true">▤</span>
+                <div>
+                  <h2>สรุปการตั้งค่า</h2>
+                  <p id="settingsSummaryCaption">กำลังโหลดการตั้งค่า...</p>
+                </div>
+              </div>
+              <dl>
+                <div>
+                  <dt>ประเภทที่พัก</dt>
+                  <dd id="summaryResidence">ยังไม่ระบุ</dd>
+                </div>
+                <div>
+                  <dt>ผู้อาศัย</dt>
+                  <dd id="summaryOccupants">ยังไม่ระบุ</dd>
+                </div>
+                <div>
+                  <dt>ค่าไฟต่อหน่วย</dt>
+                  <dd id="summaryPrice">ยังไม่ระบุ</dd>
+                </div>
+                <div>
+                  <dt>ค่าบริการ</dt>
+                  <dd id="summaryService">ยังไม่ระบุ</dd>
+                </div>
+              </dl>
+              <div class="budget-highlight">
+                <span>เป้าหมายค่าไฟรายเดือน</span
+                ><strong id="summaryBudget">ยังไม่กำหนดงบ</strong
+                ><small>เป้าหมายที่คุณตั้ง ไม่ใช่ยอดบิลจริง</small>
+              </div>
+              <div class="locale-tags">
+                <span>สกุลเงิน · THB</span><span>เวลา · Asia/Bangkok</span>
+              </div>
+            </section>
+            <section class="future-card">
+              <span aria-hidden="true">✧</span>
+              <h2>ข้อมูลเล็ก ๆ เพื่อคำแนะนำที่ตรงขึ้น</h2>
+              <p>
+                ประเภทที่พักและจำนวนผู้อาศัยจะช่วยเติมบริบทให้การวิเคราะห์
+                ส่วนงบค่าไฟช่วยกำหนดเป้าหมายในการประหยัด
+              </p>
+              <p>
+                ระบบจะใช้ร่วมกับบิลและเครื่องใช้ไฟฟ้าของคุณเมื่อเปิดใช้งานส่วนคำแนะนำ
+                AI
+              </p>
+              <a href="/frontend/appliances/appliances.html"
+                >ดูข้อมูลเครื่องใช้ไฟฟ้า →</a
+              >
+            </section>
+          </aside>
+        </div>
+      </main>
+    </div>
+    <script src="/frontend/settings/settings.js?v=20261021-api-1"></script>
+  </body>
+</html>

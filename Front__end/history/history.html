@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ประวัติข้อมูล | PowerTrack</title>
+  <link rel="stylesheet" href="/frontend/history/history.css?v=20261022-mutations-1">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <a class="brand" href="/dashboard"><span class="brand-icon">ϟ</span>PowerTrack</a>
+      <nav aria-label="เมนูหลัก">
+        <a href="/dashboard"><span>⌂</span>หน้าหลัก</a>
+        <a href="/add-electricity"><span>▣</span>เพิ่มข้อมูลค่าไฟ</a>
+        <a href="/frontend/history/history.html" class="active" aria-current="page"><span>▤</span>ประวัติข้อมูล</a>
+        <a href="/frontend/appliances/appliances.html"><span>◉</span>เครื่องใช้ไฟฟ้า</a>
+        <a href="/frontend/analysis/analysis.html"><span>▧</span>วิเคราะห์ข้อมูล</a>
+        <a href="/frontend/analysis/analysis.html#charts"><span>▥</span>กราฟ</a>
+        <a href="/frontend/advice/advice.html"><span>♙</span>คำแนะนำ</a>
+        <a href="/frontend/settings/settings.html"><span>⚙</span>ตั้งค่า</a>
+      </nav>
+      <div class="sidebar-user"><span class="avatar" id="sidebarAvatarText">U</span><div><strong id="sidebarUserName">กำลังโหลด...</strong><small>นักศึกษา</small></div></div>
+    </aside>
+    <main>
+      <header><h1>ประวัติข้อมูลค่าไฟ</h1></header>
+      <section aria-label="ประวัติค่าไฟ">
+        <div class="toolbar">
+          <label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><input id="searchInput" type="search" placeholder="ค้นหาเดือน / ปี" aria-label="ค้นหาเดือนหรือปี"></label>
+          <label class="filter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18l-7 8v7l-4 2v-9Z"/></svg><select id="yearFilter" aria-label="กรองตามปี"><option value="all">ทั้งหมด</option></select></label>
+        </div>
+        <p id="historyMutationStatus" role="status" aria-live="polite"></p><p id="historyStatus" role="status" aria-live="polite" data-loading="true">กำลังโหลดข้อมูลค่าไฟ...</p>
+        <button type="button" id="retryButton" hidden>ลองใหม่</button>
+        <div class="table-wrap"><table>
+          <thead><tr><th scope="col">เดือน / ปี</th><th scope="col">หน่วยที่ใช้<br>(kWh)</th><th scope="col">ค่าไฟ<br>(บาท)</th><th scope="col">ค่าบริการ<br>(บาท)</th><th scope="col">ค่าใช้จ่ายรวม<br>(บาท)</th><th scope="col">เปรียบเทียบ</th><th scope="col">จัดการ</th></tr></thead>
+          <tbody id="historyRows"></tbody>
+        </table><p id="emptyState" hidden>ไม่พบข้อมูลที่ตรงกับการค้นหา</p></div>
+        <div class="table-footer"><span id="recordCount" aria-live="polite"></span><nav id="pagination" aria-label="เปลี่ยนหน้าประวัติ"></nav></div>
+      </section>
+    </main>
+  </div>
+  <dialog id="billDialog" aria-labelledby="billDialogTitle">
+    <div class="bill-dialog-heading"><h2 id="billDialogTitle">แก้ไขข้อมูลค่าไฟ</h2><button id="billClose" type="button" aria-label="ปิดหน้าต่าง">×</button></div>
+    <form id="billEditForm"><div class="bill-form-grid">
+      <label>เดือนที่บันทึก<input id="billMonth" type="month" required></label>
+      <label>เลขมิเตอร์ครั้งก่อน<input id="billPrevious" type="number" min="0" max="999999999" step="1" required></label>
+      <label>เลขมิเตอร์ปัจจุบัน<input id="billCurrent" type="number" min="0" max="999999999" step="1" required></label>
+      <label>ราคาต่อหน่วย (บาท/kWh)<input id="billPrice" type="number" min="0.0001" max="10000" step="0.0001" required></label>
+      <label>ค่าบริการ (บาท)<input id="billCharge" type="number" min="0" max="1000000" step="0.01" required></label>
+    </div><p id="billPreview"></p><p class="bill-form-note">หากเปลี่ยนเดือน ระบบจะย้ายเฉพาะบิลนี้ ไม่ย้ายรายการเครื่องใช้ไฟฟ้าของเดือนเดิม</p><button type="submit" hidden>บันทึก</button></form>
+    <div id="billDeleteInfo" hidden><p>ต้องการลบค่าไฟเดือน <strong id="billDeleteMonth"></strong> ยอดรวม <strong id="billDeleteTotal"></strong> ใช่ไหม?</p><p>ข้อมูลบิลนี้จะถูกลบถาวร และกราฟกับการวิเคราะห์ครั้งถัดไปจะคำนวณใหม่ รายงาน AI ที่บันทึกไว้แล้วจะยังเก็บข้อมูลเดิม</p></div>
+    <p id="billStatus" role="status" aria-live="polite"></p>
+    <div class="bill-dialog-footer"><button id="billReload" type="button" hidden>โหลดรายการล่าสุด</button><button id="billCancel" type="button">ยกเลิก</button><button id="billConfirm" type="button">บันทึกการแก้ไข</button></div>
+  </dialog>
+  <script src="/frontend/history/mutations.js?v=20261022-mutations-1"></script>
+  <script src="/frontend/history/history.js?v=20261022-mutations-1"></script>
+</body>
+</html>

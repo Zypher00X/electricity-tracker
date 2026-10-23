@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>เพิ่มข้อมูลค่าไฟ | PowerTrack</title>
+
+  <link
+    rel="stylesheet"
+    href="/frontend/add_electricity/add_electricity.css"
+  >
+</head>
+
+<body>
+
+  <div class="app-layout">
+
+    <!-- ======================================
+         SIDEBAR
+    ======================================= -->
+    <aside class="sidebar">
+
+      <div>
+
+        <!-- LOGO -->
+        <a
+          href="/dashboard"
+          class="brand"
+        >
+          <div class="brand-icon">
+            ⚡
+          </div>
+
+          <span>
+            PowerTrack
+          </span>
+        </a>
+
+
+        <!-- NAVIGATION -->
+        <nav class="sidebar-nav">
+
+          <a
+            href="/dashboard"
+            class="nav-item"
+          >
+            <span class="nav-icon">⌂</span>
+            <span>หน้าหลัก</span>
+          </a>
+
+
+          <a
+            href="/add-electricity"
+            class="nav-item active"
+          >
+            <span class="nav-icon">▣</span>
+            <span>เพิ่มข้อมูลค่าไฟ</span>
+          </a>
+
+
+          <a
+            href="/frontend/history/history.html"
+            class="nav-item"
+          >
+            <span class="nav-icon">▤</span>
+            <span>ประวัติข้อมูล</span>
+          </a>
+          <a href="/frontend/appliances/appliances.html" class="nav-item">
+            <span class="nav-icon">◉</span><span>เครื่องใช้ไฟฟ้า</span>
+          </a>
+
+
+          <a
+            href="/frontend/analysis/analysis.html"
+            class="nav-item"
+          >
+            <span class="nav-icon">▧</span>
+            <span>วิเคราะห์ข้อมูล</span>
+          </a>
+
+
+          <a
+            href="/frontend/analysis/analysis.html#charts"
+            class="nav-item"
+          >
+            <span class="nav-icon">▥</span>
+            <span>กราฟ</span>
+          </a>
+
+
+          <a
+            href="/frontend/advice/advice.html"
+            class="nav-item"
+          >
+            <span class="nav-icon">♙</span>
+            <span>คำแนะนำ</span>
+          </a>
+
+
+          <a
+            href="/frontend/settings/settings.html"
+            class="nav-item"
+          >
+            <span class="nav-icon">⚙</span>
+            <span>ตั้งค่า</span>
+          </a>
+
+        </nav>
+
+      </div>
+
+
+      <!-- USER -->
+      <div class="sidebar-user">
+
+        <div class="user-avatar">
+          <span id="sidebarAvatarText">
+            U
+          </span>
+        </div>
+
+        <div class="user-details">
+
+          <strong id="sidebarUserName">
+            กำลังโหลด...
+          </strong>
+
+          <small>
+            นักศึกษา
+          </small>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+
+    <!-- ======================================
+         MAIN
+    ======================================= -->
+    <main class="main-content">
+
+      <!-- TOP BAR -->
+      <header class="topbar">
+
+        <div class="topbar-left">
+
+          <a
+            href="/dashboard"
+            class="back-button"
+            aria-label="กลับหน้าหลัก"
+          >
+            ←
+          </a>
+
+          <div>
+
+            <h1>
+              เพิ่มข้อมูลค่าไฟ
+            </h1>
+
+            <p>
+              กรอกข้อมูลเพื่อคำนวณค่าไฟอัตโนมัติ
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="topbar-user">
+
+          <div class="topbar-avatar">
+            <span id="topbarAvatarText">
+              U
+            </span>
+          </div>
+
+        </div>
+
+      </header>
+
+
+      <!-- ======================================
+           PAGE CONTENT
+      ======================================= -->
+      <section class="page-content">
+
+        <div class="electricity-card">
+
+          <form
+            id="electricityForm"
+            autocomplete="off"
+          >
+
+            <!-- MONTH -->
+            <div class="form-group">
+
+              <label for="billingMonth">
+                เดือน
+                <span class="required">*</span>
+              </label>
+
+              <div class="input-with-icon">
+
+                <span class="field-icon">
+                  ▣
+                </span>
+
+                <select
+                  id="billingMonth"
+                  name="billingMonth"
+                  required
+                >
+
+                  <option value="">
+                    เลือกเดือน
+                  </option>
+
+                  <option value="2026-01">
+                    มกราคม 2569
+                  </option>
+
+                  <option value="2026-02">
+                    กุมภาพันธ์ 2569
+                  </option>
+
+                  <option value="2026-03">
+                    มีนาคม 2569
+                  </option>
+
+                  <option value="2026-04">
+                    เมษายน 2569
+                  </option>
+
+                  <option value="2026-05">
+                    พฤษภาคม 2569
+                  </option>
+
+                  <option value="2026-06">
+                    มิถุนายน 2569
+                  </option>
+
+                  <option value="2026-07">
+                    กรกฎาคม 2569
+                  </option>
+
+                  <option value="2026-08">
+                    สิงหาคม 2569
+                  </option>
+
+                  <option value="2026-09">
+                    กันยายน 2569
+                  </option>
+
+                  <option
+                    value="2026-10"
+                    selected
+                  >
+                    ตุลาคม 2569
+                  </option>
+
+                  <option value="2026-11">
+                    พฤศจิกายน 2569
+                  </option>
+
+                  <option value="2026-12">
+                    ธันวาคม 2569
+                  </option>
+
+                </select>
+
+              </div>
+
+            </div>
+
+
+            <!-- METER -->
+            <div class="form-row">
+
+              <div class="form-group">
+
+                <label for="previousMeter">
+                  เลขมิเตอร์ครั้งก่อน
+                  <span class="required">*</span>
+                </label>
+
+                <input
+                  type="number"
+                  id="previousMeter"
+                  name="previousMeter"
+                  min="0"
+                  step="1"
+                  placeholder="เช่น 12456"
+                  required
+                >
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label for="currentMeter">
+                  เลขมิเตอร์ปัจจุบัน
+                  <span class="required">*</span>
+                </label>
+
+                <input
+                  type="number"
+                  id="currentMeter"
+                  name="currentMeter"
+                  min="0"
+                  step="1"
+                  placeholder="เช่น 12780"
+                  required
+                >
+
+              </div>
+
+            </div>
+
+
+            <!-- PRICE -->
+            <div class="form-row">
+
+              <div class="form-group">
+
+                <label for="unitPrice">
+                  ค่าไฟต่อหน่วย (บาท)
+                  <span class="required">*</span>
+                </label>
+
+                <input
+                  type="number"
+                  id="unitPrice"
+                  name="unitPrice"
+                  min="0"
+                  step="0.0001"
+                  value="3.2484"
+                  required
+                >
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label for="serviceCharge">
+                  ค่าบริการ (บาท)
+                  <span class="required">*</span>
+                </label>
+
+                <input
+                  type="number"
+                  id="serviceCharge"
+                  name="serviceCharge"
+                  min="0"
+                  step="0.01"
+                  value="38.22"
+                  required
+                >
+
+              </div>
+
+            </div>
+
+
+            <!-- ERROR -->
+            <div
+              class="form-message error-message"
+              id="formError"
+              role="alert"
+            ></div>
+
+
+            <!-- CALCULATE -->
+            <button
+              type="submit"
+              class="calculate-button"
+            >
+
+              <span>
+                ▣
+              </span>
+
+              คำนวณค่าไฟ
+
+            </button>
+
+          </form>
+
+
+          <!-- ======================================
+               RESULT
+          ======================================= -->
+          <section
+            class="result-card"
+            id="resultCard"
+          >
+
+            <h2>
+              ผลการคำนวณ
+            </h2>
+
+
+            <div class="result-grid">
+
+              <!-- kWh -->
+              <div class="result-item">
+
+                <div class="result-icon lightning">
+                  ⚡
+                </div>
+
+                <div>
+
+                  <span class="result-label">
+                    หน่วยที่ใช้ (kWh)
+                  </span>
+
+                  <strong id="resultUnits">
+                    0
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+              <!-- ENERGY COST -->
+              <div class="result-item middle-result">
+
+                <div class="result-icon money">
+                  ฿
+                </div>
+
+                <div>
+
+                  <span class="result-label">
+                    ค่าไฟ (บาท)
+                  </span>
+
+                  <strong id="resultEnergyCost">
+                    0.00
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+              <!-- TOTAL -->
+              <div class="result-item">
+
+                <div class="result-icon total">
+                  ▤
+                </div>
+
+                <div>
+
+                  <span class="result-label">
+                    ค่าใช้จ่ายรวม (บาท)
+                  </span>
+
+                  <strong id="resultTotal">
+                    0.00
+                  </strong>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <!-- ======================================
+               SUCCESS
+          ======================================= -->
+          <div
+            class="success-message"
+            id="successMessage"
+          >
+
+            <div class="success-icon">
+              ✓
+            </div>
+
+            <div>
+
+              <strong>
+                คำนวณข้อมูลสำเร็จ
+              </strong>
+
+              <p id="successMessageText">
+                ข้อมูลพร้อมสำหรับบันทึก
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <script
+    src="/frontend/add_electricity/add_electricity.js?v=20261007-save-1"
+  ></script>
+
+</body>
+</html>

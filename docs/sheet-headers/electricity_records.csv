@@ -1,0 +1,1 @@
+record_id,user_id,billing_month,previous_meter,current_meter,units_used,unit_price,service_charge,energy_cost,total_cost,created_at,updated_at

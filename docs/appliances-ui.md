@@ -1,0 +1,11 @@
+# Appliance UI prototype
+
+Files: Front__end/appliances/appliances.html, appliances.css, appliances.js. Open /frontend/appliances/appliances.html. UI only: no API calls, Google Sheets writes, or persistent browser storage. Added records are held in memory and disappear on reload. Month switching retains drafts already added to the list for that month until reload. No sample appliances or assumed wattages are prefilled.
+
+Data design follows the existing appliances and appliance_usage_monthly schema in data-model.md: name, category, brand/model, quantity, rated power, average power, method, sources, monthly hours/days or per-unit kWh, and notes. A future backend must derive owner/IDs/timestamps, validate inputs, persist appliance identity separately from usage snapshots, map the prototype source to power_source/energy_source, and calculate with Decimal rather than trust the browser estimate. UI UUIDs identify draft rows only. Adding the same name currently creates a separate draft, not an existing-appliance selection.
+
+Average-power method: average watts / 1000 × hours/day × actual days used × quantity. Monthly method: per-unit kWh for the selected month × quantity; hours/days are disabled and not multiplied. Rated/nameplate watts are optional reference data and never substituted for average watts. Monthly days are bounded by the actual calendar month. Unknown sources or missing calculation inputs keep estimates unavailable; explicit zero hours/days/monthly kWh produce zero when other required calculation inputs are supplied. Summary reports coverage and sums only available estimates.
+
+For cycling appliances such as refrigerators and air conditioners, the form explains that peak watts × on-time can mislead. Use measured average watts or monthly energy from measured/manufacturer/label sources, or explicitly identify a user estimate. No invented duty cycle or conversion from annual energy is assumed. Future AI recommendations must consider source confidence and the actual bill, not treat these draft estimates as measured usage.
+
+Prototype supports adding, editing, removing draft items, resetting the form, selected-month lists, live estimate preview, and responsive layout. Existing backend flows remain untouched.

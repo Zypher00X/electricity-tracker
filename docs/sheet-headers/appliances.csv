@@ -1,0 +1,1 @@
+appliance_id,user_id,appliance_name,category,brand,model,quantity,rated_power_w,average_power_w,power_source,estimation_method,default_hours_per_day,default_monthly_kwh_per_unit,status,notes,created_at,updated_at,category_custom

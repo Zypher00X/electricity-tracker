@@ -1,0 +1,299 @@
+{
+  "schema_version": "powertrack-core-v1",
+  "designed_at": "2026-10-07",
+  "spreadsheet_id": "19AIuubmMQdYmT0XHY9xRg3fROLnmm0CBKS-0yZa2YTk",
+  "preserve_sheets": [
+    "users"
+  ],
+  "existing_sheet_policy": "verify_headers_or_stop_never_overwrite",
+  "sheets": [
+    {
+      "name": "electricity_records",
+      "primary_key": [
+        "record_id"
+      ],
+      "unique_keys": [
+        [
+          "user_id",
+          "billing_month"
+        ]
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "user_id"
+          ],
+          "references": "users",
+          "reference_columns": [
+            "user_id"
+          ]
+        }
+      ],
+      "headers": [
+        "record_id",
+        "user_id",
+        "billing_month",
+        "previous_meter",
+        "current_meter",
+        "units_used",
+        "unit_price",
+        "service_charge",
+        "energy_cost",
+        "total_cost",
+        "created_at",
+        "updated_at"
+      ],
+      "backend_fields": [
+        "record_id",
+        "user_id",
+        "units_used",
+        "energy_cost",
+        "total_cost",
+        "created_at",
+        "updated_at"
+      ]
+    },
+    {
+      "name": "appliances",
+      "primary_key": [
+        "appliance_id"
+      ],
+      "unique_keys": [],
+      "foreign_keys": [
+        {
+          "columns": [
+            "user_id"
+          ],
+          "references": "users",
+          "reference_columns": [
+            "user_id"
+          ]
+        }
+      ],
+      "headers": [
+        "appliance_id",
+        "user_id",
+        "appliance_name",
+        "category",
+        "brand",
+        "model",
+        "quantity",
+        "rated_power_w",
+        "average_power_w",
+        "power_source",
+        "estimation_method",
+        "default_hours_per_day",
+        "default_monthly_kwh_per_unit",
+        "status",
+        "notes",
+        "created_at",
+        "updated_at",
+        "category_custom"
+      ],
+      "backend_fields": [
+        "appliance_id",
+        "user_id",
+        "created_at",
+        "updated_at"
+      ]
+    },
+    {
+      "name": "appliance_usage_monthly",
+      "primary_key": [
+        "usage_id"
+      ],
+      "unique_keys": [
+        [
+          "user_id",
+          "appliance_id",
+          "billing_month"
+        ]
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "user_id"
+          ],
+          "references": "users",
+          "reference_columns": [
+            "user_id"
+          ]
+        },
+        {
+          "columns": [
+            "user_id",
+            "appliance_id"
+          ],
+          "references": "appliances",
+          "reference_columns": [
+            "user_id",
+            "appliance_id"
+          ]
+        }
+      ],
+      "headers": [
+        "usage_id",
+        "user_id",
+        "appliance_id",
+        "billing_month",
+        "appliance_name_snapshot",
+        "category_snapshot",
+        "quantity_snapshot",
+        "rated_power_w_snapshot",
+        "average_power_w_snapshot",
+        "power_source_snapshot",
+        "estimation_method",
+        "hours_per_day",
+        "days_used",
+        "monthly_kwh_per_unit",
+        "energy_source",
+        "estimated_kwh",
+        "calculation_version",
+        "notes",
+        "created_at",
+        "updated_at",
+        "category_custom_snapshot",
+        "brand_snapshot",
+        "model_snapshot",
+        "status",
+        "revision",
+        "request_id"
+      ],
+      "backend_fields": [
+        "usage_id",
+        "user_id",
+        "estimated_kwh",
+        "calculation_version",
+        "created_at",
+        "updated_at"
+      ]
+    },
+    {
+      "name": "user_settings",
+      "primary_key": [
+        "user_id"
+      ],
+      "unique_keys": [
+        [
+          "user_id"
+        ]
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "user_id"
+          ],
+          "references": "users",
+          "reference_columns": [
+            "user_id"
+          ]
+        }
+      ],
+      "headers": [
+        "user_id",
+        "residence_type",
+        "occupants",
+        "default_unit_price",
+        "default_service_charge",
+        "monthly_budget",
+        "currency",
+        "timezone",
+        "created_at",
+        "updated_at"
+      ],
+      "backend_fields": [
+        "user_id",
+        "currency",
+        "timezone",
+        "created_at",
+        "updated_at"
+      ]
+    },
+    {
+      "name": "ai_reports",
+      "primary_key": [
+        "report_id"
+      ],
+      "unique_keys": [],
+      "foreign_keys": [
+        {
+          "columns": [
+            "user_id"
+          ],
+          "references": "users",
+          "reference_columns": [
+            "user_id"
+          ]
+        }
+      ],
+      "headers": [
+        "report_id",
+        "user_id",
+        "billing_month",
+        "input_hash",
+        "input_snapshot_json",
+        "analysis_json",
+        "provider",
+        "model",
+        "prompt_version",
+        "calculation_version",
+        "created_at"
+      ],
+      "backend_fields": [
+        "report_id",
+        "user_id",
+        "billing_month",
+        "input_hash",
+        "input_snapshot_json",
+        "analysis_json",
+        "provider",
+        "model",
+        "prompt_version",
+        "calculation_version",
+        "created_at"
+      ]
+    }
+  ],
+  "enums": {
+    "category": [
+      "air_conditioner",
+      "water_heater",
+      "computer",
+      "refrigerator",
+      "fan",
+      "lighting",
+      "washing_machine",
+      "television",
+      "other"
+    ],
+    "power_source": [
+      "nameplate",
+      "measured",
+      "manufacturer",
+      "user_estimate",
+      "unknown"
+    ],
+    "energy_source": [
+      "measured",
+      "energy_label",
+      "manufacturer",
+      "user_estimate",
+      "unknown"
+    ],
+    "estimation_method": [
+      "average_power",
+      "monthly_kwh"
+    ],
+    "status": [
+      "active",
+      "archived"
+    ],
+    "residence_type": [
+      "dormitory",
+      "apartment",
+      "house",
+      "other",
+      "unknown"
+    ]
+  }
+}

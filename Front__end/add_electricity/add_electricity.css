@@ -1,0 +1,804 @@
+/* =========================================
+   RESET
+========================================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family:
+    "Segoe UI",
+    Tahoma,
+    Arial,
+    sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: #f4f8fd;
+  color: #15395f;
+}
+
+
+/* =========================================
+   APP
+========================================= */
+
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 220px;
+  height: 100vh;
+
+  padding: 22px 14px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background:
+    linear-gradient(
+      180deg,
+      #073d81 0%,
+      #062d64 100%
+    );
+
+  color: #ffffff;
+
+  z-index: 10;
+}
+
+
+/* BRAND */
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 0 10px 22px;
+
+  text-decoration: none;
+  color: #ffffff;
+
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.brand-icon {
+  width: 35px;
+  height: 35px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2294ff,
+      #0961ed
+    );
+
+  box-shadow:
+    0 5px 12px
+    rgba(0, 80, 200, 0.28);
+
+  font-size: 18px;
+}
+
+
+/* NAV */
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.nav-item {
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 0 14px;
+
+  border-radius: 10px;
+
+  color: #d9eaff;
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.nav-item:hover {
+  background:
+    rgba(255, 255, 255, 0.1);
+
+  color: #ffffff;
+}
+
+.nav-item.active {
+  background:
+    linear-gradient(
+      90deg,
+      #1687ff,
+      #0871ed
+    );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 5px 12px
+    rgba(0, 82, 212, 0.35);
+}
+
+.nav-icon {
+  width: 20px;
+
+  display: inline-flex;
+  justify-content: center;
+
+  font-size: 16px;
+}
+
+.disabled-link {
+  opacity: 0.9;
+}
+
+
+/* SIDEBAR USER */
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding:
+    16px 10px
+    4px;
+
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.15);
+}
+
+.user-avatar,
+.topbar-avatar {
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #e4f1ff;
+
+  color: #0769db;
+
+  font-weight: 800;
+}
+
+.user-details {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.user-details strong {
+  overflow: hidden;
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.user-details small {
+  margin-top: 2px;
+
+  color: #a9c9ef;
+
+  font-size: 11px;
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+.main-content {
+  width: calc(100% - 220px);
+  min-height: 100vh;
+
+  margin-left: 220px;
+}
+
+
+/* =========================================
+   TOPBAR
+========================================= */
+
+.topbar {
+  height: 82px;
+
+  padding: 0 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #ffffff;
+
+  border-bottom:
+    1px solid #e5edf7;
+
+  box-shadow:
+    0 2px 8px
+    rgba(38, 86, 138, 0.04);
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.back-button {
+  width: 36px;
+  height: 36px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 8px;
+
+  color: #31577e;
+  text-decoration: none;
+
+  font-size: 22px;
+
+  transition:
+    background 0.2s ease;
+}
+
+.back-button:hover {
+  background: #edf5ff;
+}
+
+.topbar h1 {
+  color: #173e68;
+
+  font-size: 22px;
+  font-weight: 750;
+}
+
+.topbar p {
+  margin-top: 4px;
+
+  color: #8497ab;
+
+  font-size: 12px;
+}
+
+
+/* =========================================
+   PAGE
+========================================= */
+
+.page-content {
+  min-height:
+    calc(100vh - 82px);
+
+  padding:
+    28px
+    30px
+    50px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+
+/* =========================================
+   ELECTRICITY CARD
+========================================= */
+
+.electricity-card {
+  width: min(
+    100%,
+    760px
+  );
+
+  padding: 28px;
+
+  border:
+    1px solid
+    #e1ebf6;
+
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 8px 30px
+    rgba(31, 78, 121, 0.06);
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  margin-bottom: 19px;
+}
+
+.form-group label {
+  color: #385b7f;
+
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.required {
+  color: #1680ef;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+input,
+select {
+  width: 100%;
+  height: 48px;
+
+  padding:
+    0
+    14px;
+
+  border:
+    1px solid #cddced;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #315678;
+
+  font-size: 14px;
+
+  transition:
+    border 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+input::placeholder {
+  color: #a9b9ca;
+}
+
+input:focus,
+select:focus {
+  border-color: #2689f5;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(38, 137, 245, 0.1);
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon select {
+  padding-left: 43px;
+
+  appearance: auto;
+}
+
+.field-icon {
+  position: absolute;
+  z-index: 1;
+
+  top: 50%;
+  left: 14px;
+
+  transform:
+    translateY(-50%);
+
+  color: #5380ad;
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   CALCULATE BUTTON
+========================================= */
+
+.calculate-button {
+  width: 100%;
+  height: 50px;
+
+  margin-top: 1px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  border: none;
+  border-radius: 8px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #0874f8,
+      #1b85ff
+    );
+
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 7px 15px
+    rgba(11, 112, 238, 0.2);
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.calculate-button:hover {
+  transform:
+    translateY(-1px);
+
+  box-shadow:
+    0 9px 18px
+    rgba(11, 112, 238, 0.25);
+}
+
+.calculate-button:active {
+  transform:
+    translateY(0);
+}
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+.form-message {
+  display: none;
+
+  margin-bottom: 14px;
+  padding: 11px 13px;
+
+  border-radius: 8px;
+
+  font-size: 12px;
+}
+
+.error-message.show {
+  display: block;
+
+  border:
+    1px solid #fecaca;
+
+  background: #fef2f2;
+
+  color: #b42318;
+}
+
+
+/* =========================================
+   RESULT
+========================================= */
+
+.result-card {
+  margin-top: 22px;
+
+  padding: 20px 22px;
+
+  border:
+    1px solid #dfeaf6;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f9fcff,
+      #edf7ff
+    );
+}
+
+.result-card h2 {
+  margin-bottom: 18px;
+
+  color: #274d71;
+
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(3, 1fr);
+}
+
+.result-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+
+  min-height: 70px;
+
+  padding: 6px 18px;
+}
+
+.middle-result {
+  border-left:
+    1px solid #d9e7f3;
+
+  border-right:
+    1px solid #d9e7f3;
+}
+
+.result-icon {
+  width: 36px;
+  height: 36px;
+
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  font-weight: 800;
+}
+
+.result-icon.lightning {
+  background: #e7f3ff;
+  color: #147bf4;
+}
+
+.result-icon.money {
+  background: #e2f8ff;
+  color: #0c94d5;
+}
+
+.result-icon.total {
+  background: #edf2ff;
+  color: #476ce3;
+}
+
+.result-item > div:last-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.result-label {
+  margin-bottom: 4px;
+
+  color: #6a8299;
+
+  font-size: 11px;
+}
+
+.result-item strong {
+  color: #204c79;
+
+  font-size: 17px;
+}
+
+
+/* =========================================
+   SUCCESS
+========================================= */
+
+.success-message {
+  display: none;
+
+  margin-top: 16px;
+
+  padding: 14px 16px;
+
+  align-items: center;
+  gap: 12px;
+
+  border:
+    1px solid #c6edda;
+
+  border-radius: 9px;
+
+  background: #edfbf5;
+}
+
+.success-message.show {
+  display: flex;
+}
+
+.success-icon {
+  width: 32px;
+  height: 32px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #22b573;
+
+  color: white;
+
+  font-weight: 800;
+}
+
+.success-message strong {
+  color: #168255;
+
+  font-size: 12px;
+}
+
+.success-message p {
+  margin-top: 3px;
+
+  color: #6b9d88;
+
+  font-size: 11px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+  .sidebar {
+    width: 80px;
+
+    padding:
+      20px
+      10px;
+  }
+
+  .brand span,
+  .nav-item span:not(.nav-icon),
+  .user-details {
+    display: none;
+  }
+
+  .brand {
+    justify-content: center;
+
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .sidebar-nav {
+    align-items: center;
+  }
+
+  .nav-item {
+    width: 48px;
+
+    justify-content: center;
+
+    padding: 0;
+  }
+
+  .main-content {
+    width:
+      calc(100% - 80px);
+
+    margin-left: 80px;
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  .sidebar {
+    display: none;
+  }
+
+  .main-content {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .topbar {
+    padding:
+      0
+      18px;
+  }
+
+  .page-content {
+    padding:
+      18px
+      14px
+      35px;
+  }
+
+  .electricity-card {
+    padding: 20px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+
+    gap: 0;
+  }
+
+  .result-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .result-item {
+    justify-content: flex-start;
+  }
+
+  .middle-result {
+    border-left: none;
+    border-right: none;
+
+    border-top:
+      1px solid #d9e7f3;
+
+    border-bottom:
+      1px solid #d9e7f3;
+  }
+
+}

@@ -1,0 +1,54 @@
+name: powertrack_production
+services:
+  backend:
+    image: powertrack:security-reviewed
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+      target: runtime
+    env_file: .env.production
+    environment:
+      APP_ENV: production
+      COOKIE_SECURE: 'true'
+      REDIS_HOST: redis
+      GOOGLE_CREDENTIALS_PATH: /run/secrets/google_service_account
+    command: ['uvicorn', 'app.main:app', '--host', '0.0.0.0', '--port', '8000', '--workers', '2', '--no-server-header', '--proxy-headers', '--forwarded-allow-ips', '${TRUSTED_PROXY_IPS:?Set only the actual reverse proxy source IPs, never *}']
+    secrets: [google_service_account]
+    ports: ['127.0.0.1:8000:8000']
+    read_only: true
+    tmpfs: ['/tmp:size=32M,mode=1777']
+    cap_drop: [ALL]
+    security_opt: ['no-new-privileges:true']
+    restart: unless-stopped
+    pids_limit: 128
+    mem_limit: 1g
+    cpus: 2
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks: [app]
+  redis:
+    image: redis:7-alpine@sha256:57e4255cc971b1c8d6f8a6ca283ac01bc3ecdd914273ef6bfaede87aaecd6541
+    user: '999:1000'
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?Set REDIS_PASSWORD in the production environment}
+    command: ['sh', '-c', 'exec redis-server --appendonly yes --requirepass "$$REDIS_PASSWORD" --maxmemory 256mb --maxmemory-policy noeviction']
+    healthcheck:
+      test: ['CMD-SHELL', 'REDISCLI_AUTH="$$REDIS_PASSWORD" redis-cli ping | grep -q PONG']
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    volumes: ['redis_data:/data']
+    cap_drop: [ALL]
+    security_opt: ['no-new-privileges:true']
+    restart: unless-stopped
+    mem_limit: 384m
+    pids_limit: 64
+    networks: [app]
+networks:
+  app: {}
+volumes:
+  redis_data: {}
+secrets:
+  google_service_account:
+    file: ${GOOGLE_CREDENTIALS_FILE:?Set path to the production service account file}

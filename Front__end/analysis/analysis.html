@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>วิเคราะห์ข้อมูลและกราฟ | PowerTrack</title>
+    <link rel="stylesheet" href="/frontend/analysis/analysis.css?v=20261021-api-1" />
+  </head>
+  <body>
+    <div class="app-layout">
+      <aside class="sidebar">
+        <a class="brand" href="/dashboard"
+          ><span class="brand-icon">ϟ</span>PowerTrack</a
+        >
+        <nav aria-label="เมนูหลัก">
+          <a href="/dashboard"><span>⌂</span>หน้าหลัก</a
+          ><a href="/add-electricity"><span>▣</span>เพิ่มข้อมูลค่าไฟ</a
+          ><a href="/frontend/history/history.html"
+            ><span>▤</span>ประวัติข้อมูล</a
+          ><a href="/frontend/appliances/appliances.html"
+            ><span>◉</span>เครื่องใช้ไฟฟ้า</a
+          ><a
+            href="/frontend/analysis/analysis.html"
+            class="active"
+            aria-current="page"
+            ><span>▧</span>วิเคราะห์ข้อมูล</a
+          ><a href="/frontend/analysis/analysis.html#charts"
+            ><span>▥</span>กราฟ</a
+          ><a href="/frontend/advice/advice.html"><span>♙</span>คำแนะนำ</a
+          ><a href="/frontend/settings/settings.html"><span>⚙</span>ตั้งค่า</a>
+        </nav>
+        <div class="sidebar-user">
+          <span class="avatar">U</span>
+          <div><strong id="analysisUser">กำลังโหลด...</strong><small>นักศึกษา</small></div>
+        </div>
+      </aside>
+      <main>
+        <div class="page-heading">
+          <a href="/dashboard" class="back-link" aria-label="กลับหน้าหลัก">←</a>
+          <h1>วิเคราะห์ข้อมูล + กราฟ</h1>
+          
+        </div>
+        <div class="tabs" role="tablist" aria-label="มุมมองข้อมูล">
+          <button
+            role="tab"
+            aria-selected="true"
+            aria-controls="summaryPanel"
+            id="summaryTab"
+            data-view="summary"
+          >
+            สรุปข้อมูล</button
+          ><button
+            role="tab"
+            aria-selected="false"
+            aria-controls="chartsPanel"
+            id="chartsTab"
+            data-view="charts"
+            tabindex="-1"
+          >
+            กราฟ</button
+          ><button
+            role="tab"
+            aria-selected="false"
+            aria-controls="advicePanel"
+            id="adviceTab"
+            data-view="advice"
+            tabindex="-1"
+          >
+            ✧ คำแนะนำ
+          </button>
+        </div>
+        <div class="period-bar">
+          <p>ภาพรวมการใช้ไฟฟ้าและค่าใช้จ่ายของคุณ</p>
+          <label
+            ><span class="sr-only">ช่วงเวลาที่แสดง</span
+            ><select id="period">
+              <option value="12">ย้อนหลัง 12 เดือน</option><option value="6">ย้อนหลัง 6 เดือน</option><option value="3">ย้อนหลัง 3 เดือน</option>
+            </select></label
+          >
+        </div>
+        <div class="analysis-controls"><label for="endMonth">ถึงเดือน</label><input type="month" id="endMonth" aria-label="เดือนสิ้นสุด"><span id="rangeLabel"></span></div>
+        <p id="analysisStatus" role="status" aria-live="polite">กำลังโหลดข้อมูลวิเคราะห์...</p><button type="button" id="analysisRetry" hidden>ลองใหม่</button>
+        <section id="summaryPanel" role="tabpanel" aria-labelledby="summaryTab">
+          <div class="metric-grid">
+            <article class="metric">
+              <span>ค่าไฟเดือนล่าสุด</span><strong id="latestCost"></strong
+              ><small id="costChange"></small>
+            </article>
+            <article class="metric">
+              <span>หน่วยไฟเดือนล่าสุด</span><strong id="latestUnits">–</strong
+              ><small id="unitsChange">–</small>
+            </article>
+            <article class="metric">
+              <span>เดือนที่ใช้ไฟสูงสุด</span
+              ><strong class="month-value" id="highestMonth">–</strong
+              ><small id="highestUnits">–</small>
+            </article>
+            <article class="metric">
+              <span>เดือนที่ใช้ไฟต่ำสุด</span
+              ><strong class="month-value teal" id="lowestMonth">–</strong
+              ><small id="lowestUnits">–</small>
+            </article>
+          </div>
+          <article class="chart-card">
+            <div class="card-heading">
+              <h2>แนวโน้มค่าไฟรายเดือน</h2>
+              <div class="legend">
+                <span><i class="blue"></i>หน่วยไฟ (kWh)</span
+                ><span><i class="green line"></i>ค่าไฟ (บาท)</span>
+              </div>
+            </div>
+            <div id="trendChart" class="chart-host"></div>
+            <p class="chart-caption">
+              แท่งสีน้ำเงินอ่านแกนซ้าย · เส้นสีเขียวอ่านแกนขวา
+            </p>
+          </article>
+          <div class="bottom-grid">
+            <article class="chart-card comparison">
+              <h2>เปรียบเทียบบิลล่าสุดกับเดือนก่อน</h2>
+              <div id="comparisonPercent" class="comparison-percent"></div>
+              <p id="comparisonDescription">–</p>
+              <div class="comparison-row">
+                <strong id="thisMonthCost">–</strong><span id="thisMonthLabel">–</span>
+              </div>
+              <div class="comparison-row muted">
+                <strong id="previousCost">–</strong
+                ><span id="previousMonthLabel">–</span>
+              </div>
+            </article>
+            <article class="chart-card">
+              <h2>สัดส่วนค่าใช้จ่าย</h2>
+              <div class="donut-layout"><div class="donut" id="costDonut" role="img" aria-label="สัดส่วนค่าใช้จ่าย"><div><strong id="donutTotal">–</strong><span>บาท</span></div></div><div class="donut-legend" id="costLegend"></div></div>
+              <p class="chart-caption" id="breakdownNote">ค่าไฟและค่าบริการจากบิลที่บันทึก</p>
+            </article>
+          </div>
+        </section>
+        <section
+          id="chartsPanel"
+          role="tabpanel"
+          aria-labelledby="chartsTab"
+          hidden
+        >
+          <article class="chart-card">
+            <div class="card-heading">
+              <div>
+                <h2>เปรียบเทียบการใช้ไฟรายเดือน</h2>
+                <p class="chart-caption">
+                  ดูแนวโน้มหน่วยไฟหรือค่าใช้จ่ายแยกกัน
+                </p>
+              </div>
+              <select id="chartMetric" aria-label="ข้อมูลที่ใช้แสดงกราฟ">
+                <option value="units">หน่วยไฟ (kWh)</option>
+                <option value="cost">ค่าใช้จ่าย (บาท)</option>
+              </select>
+            </div>
+            <div id="detailChart" class="chart-host"></div>
+          </article>
+          <article class="chart-card">
+            <div class="card-heading">
+              <h2>ประมาณการใช้ไฟแยกตามเครื่องใช้</h2>
+              <span class="chart-caption" id="applianceMonth">–</span>
+            </div>
+            <div id="applianceBars" class="appliance-bars"></div><p id="applianceCoverage" class="chart-caption"></p>
+            <p class="chart-caption">
+              ประมาณการเครื่องใช้อาจไม่เท่ากับมิเตอร์จริง
+              ข้อมูลไม่ครบจะไม่ถือว่าเป็นศูนย์
+            </p>
+          </article>
+        </section>
+        <section
+          id="advicePanel"
+          role="tabpanel"
+          aria-labelledby="adviceTab"
+          hidden
+        >
+          <article class="chart-card advice-placeholder">
+            <span>✧</span>
+            <h2>เตรียมข้อมูลให้พร้อมสำหรับคำแนะนำ</h2>
+            <p>
+              บันทึกบิลค่าไฟและการใช้งานเครื่องใช้ในเดือนเดียวกัน<br />เพื่อเป็นข้อมูลให้
+              AI วิเคราะห์และแนะนำการประหยัดไฟในขั้นตอนถัดไป
+            </p>
+            <a href="/frontend/advice/advice.html"
+              >ลองหน้าแชตผู้ช่วยประหยัดไฟ →</a
+            ><small>ทดลอง UI ด้วยข้อมูลตัวอย่าง · ยังไม่เชื่อม AI จริง</small>
+          </article>
+        </section>
+        <footer class="prototype-footer">
+          กราฟบิลใช้ข้อมูลที่บันทึกจริง · การใช้ไฟแยกเครื่องใช้เป็นค่าประมาณ ไม่ใช่การวัดจากมิเตอร์
+        </footer>
+      </main>
+    </div>
+    <script src="/frontend/analysis/analysis.js?v=20261021-advice-tabs-2"></script>
+  </body>
+</html>

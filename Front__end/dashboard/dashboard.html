@@ -1,0 +1,140 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PowerTrack | Dashboard</title><link rel="stylesheet" href="/frontend/dashboard/dashboard.css?v=20261023-data-1"><script src="/frontend/dashboard/dashboard.js?v=20261023-data-1" defer></script></head><body><div class="app-layout"><aside class="sidebar">
+
+      <!-- Logo -->
+
+      <div class="sidebar-brand">
+
+        <div class="brand-icon">
+          ⚡
+        </div>
+
+        <span>
+          PowerTrack
+        </span>
+
+      </div>
+
+
+      <!-- Navigation -->
+
+      <nav class="sidebar-nav">
+
+        <a
+          href="/dashboard"
+          class="nav-item active"
+        >
+          <span class="nav-icon">⌂</span>
+          <span class="nav-text">หน้าหลัก</span>
+        </a>
+
+
+        <a
+          href="/add-electricity"
+          class="nav-item"
+        >
+          <span class="nav-icon">
+            ▣
+          </span>
+
+          <span>
+            เพิ่มข้อมูลค่าไฟ
+          </span>
+        </a>
+
+
+        <a
+          href="/frontend/history/history.html"
+          class="nav-item"
+        >
+          <span class="nav-icon">▣</span>
+          <span class="nav-text">ประวัติข้อมูล</span>
+        </a>
+        <a href="/frontend/appliances/appliances.html" class="nav-item">
+          <span class="nav-icon">◉</span><span class="nav-text">เครื่องใช้ไฟฟ้า</span>
+        </a>
+
+
+        <a
+          href="/frontend/analysis/analysis.html"
+          class="nav-item"
+        >
+          <span class="nav-icon">▥</span>
+          <span class="nav-text">วิเคราะห์ข้อมูล</span>
+        </a>
+
+
+        <a
+          href="/frontend/analysis/analysis.html#charts"
+          class="nav-item"
+        >
+          <span class="nav-icon">▧</span>
+          <span class="nav-text">กราฟ</span>
+        </a>
+
+
+        <a
+          href="/frontend/advice/advice.html"
+          class="nav-item"
+        >
+          <span class="nav-icon">♧</span>
+          <span class="nav-text">คำแนะนำ</span>
+        </a>
+
+
+        <a
+          href="/frontend/settings/settings.html"
+          class="nav-item"
+        >
+          <span class="nav-icon">⚙</span>
+          <span class="nav-text">ตั้งค่า</span>
+        </a>
+
+      </nav>
+
+
+      <!-- User bottom -->
+
+      <div class="sidebar-user">
+
+        <div class="sidebar-avatar">
+            U
+        </div>
+
+        <div class="sidebar-user-info">
+
+            <strong id="sidebarUserName">
+            กำลังโหลด...
+            </strong>
+
+            <span id="sidebarUserRole">
+            ผู้ใช้งาน
+            </span>
+
+        </div>
+
+        </div>
+
+
+        <button
+        type="button"
+        id="logoutButton"
+        class="logout-button"
+        >
+        ออกจากระบบ
+        </button>
+
+    </aside><div class="main-area"><header class="topbar"><div class="topbar-left"><span id="selectedMonthLabel"></span></div><div class="topbar-right"><label for="monthSelector" class="sr-only">เดือนที่แสดง</label><select id="monthSelector" class="month-selector" disabled><option value="">กำลังโหลด...</option></select><button id="reloadDashboard" class="dash-button" type="button">โหลดข้อมูลล่าสุด</button></div></header>
+<main class="dashboard-content"><section class="welcome-section"><h1>สวัสดีคุณ <span id="welcomeUserName">...</span> <span class="wave">👋</span></h1><p>มาดูสรุปการใช้ไฟฟ้าของคุณกันเลย</p></section>
+<p id="dashboardStatus" role="status" aria-live="polite">กำลังโหลดข้อมูลค่าไฟ...</p><button id="dashboardRetry" type="button" class="dash-button" hidden>ลองใหม่</button>
+<div id="dashboardData" hidden>
+<section class="summary-grid">
+<article class="summary-card"><div class="summary-icon blue">⚡</div><div class="summary-info"><span class="summary-label">หน่วยที่ใช้ (kWh)</span><strong id="usageValue" class="summary-value">–</strong><div id="usageChange" class="summary-change"></div></div></article>
+<article class="summary-card"><div class="summary-icon money">฿</div><div class="summary-info"><span class="summary-label">ค่าใช้จ่ายรวม (บาท)</span><strong id="costValue" class="summary-value">–</strong><div id="costChange" class="summary-change"></div></div></article>
+<article class="summary-card"><div class="summary-icon orange">↗</div><div class="summary-info"><span class="summary-label">ค่าเฉลี่ยช่วง 6 เดือน (บาท)</span><strong id="averageValue" class="summary-value">–</strong><div id="averageNote" class="summary-change"></div></div></article>
+</section>
+<p id="dashboardEmpty" class="dash-note" hidden></p>
+<section class="analytics-grid">
+<article class="dashboard-card chart-card"><div class="card-header"><h2>แนวโน้มค่าใช้จ่ายรวม 6 เดือน</h2></div><p id="periodLabel" class="dash-note"></p><div class="line-chart"><div id="chartYAxis" class="chart-y-axis"></div><div class="chart-main"><svg id="billChart" class="line-svg" viewBox="0 0 600 200" preserveAspectRatio="none" role="img" aria-label="แนวโน้มค่าใช้จ่ายรวมรายเดือน"></svg><div id="chartXAxis" class="chart-x-axis"></div></div></div><details class="dash-chart-details"><summary>ดูตัวเลขรายเดือน</summary><table><thead><tr><th>เดือน</th><th>รวม (บาท)</th></tr></thead><tbody id="chartValues"></tbody></table></details></article>
+<article class="dashboard-card expense-card"><div class="card-header"><h2>สัดส่วนค่าใช้จ่ายของเดือนที่เลือก</h2></div><div class="expense-content"><div id="costDonut" class="donut-chart" role="img"><div class="donut-center"><strong id="donutTotal">–</strong><span>บาท</span></div></div><div id="expenseLegend" class="expense-legend"></div></div><p id="breakdownNote" class="dash-note"></p></article>
+</section><section class="recommendation-card"><div class="recommendation-icon">♧</div><div><h3>สรุปจากบิลของคุณ</h3><p id="billInsight"></p><a href="/frontend/advice/advice.html">ถามผู้ช่วย AI เพื่อวางแผนประหยัดไฟ →</a></div></section>
+</div></main></div></div></body></html>

@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>เครื่องใช้ไฟฟ้าและการใช้งาน | PowerTrack</title>
+    <link rel="stylesheet" href="/frontend/appliances/appliances.css?v=20261020-dialog-1" />
+  </head>
+  <body>
+    <div class="app-layout">
+      <aside class="sidebar">
+        <a class="brand" href="/dashboard"
+          ><span class="brand-icon">ϟ</span>PowerTrack</a
+        >
+        <nav aria-label="เมนูหลัก">
+          <a href="/dashboard"><span>⌂</span>หน้าหลัก</a
+          ><a href="/add-electricity"><span>▣</span>เพิ่มข้อมูลค่าไฟ</a>
+          <a href="/frontend/history/history.html"
+            ><span>▤</span>ประวัติข้อมูล</a
+          >
+          <a
+            href="/frontend/appliances/appliances.html"
+            class="active"
+            aria-current="page"
+            ><span>◉</span>เครื่องใช้ไฟฟ้า</a
+          >
+          <a href="/frontend/analysis/analysis.html"><span>▧</span>วิเคราะห์ข้อมูล</a
+          ><a href="/frontend/analysis/analysis.html#charts"><span>▥</span>กราฟ</a
+          ><a href="/frontend/advice/advice.html"><span>♙</span>คำแนะนำ</a
+          ><a href="/frontend/settings/settings.html"><span>⚙</span>ตั้งค่า</a>
+        </nav>
+        <div class="sidebar-user">
+          <span class="avatar">U</span>
+          <div><strong>ผู้ใช้งาน</strong><small>PowerTrack</small></div>
+        </div>
+      </aside>
+      <main>
+        <header>
+          <div>
+            <p class="eyebrow">รู้การใช้งาน เพื่อวางแผนประหยัดไฟ</p>
+            <h1>เครื่องใช้ไฟฟ้าและการใช้งาน</h1>
+            <p class="subtitle">
+              เพิ่มเครื่องใช้ในบ้านหรือหอพัก
+              และบันทึกพฤติกรรมการใช้งานในแต่ละเดือน
+            </p>
+          </div>
+        </header>
+        <div class="prototype-note">
+          <span>◌</span>
+          <p>
+            บันทึกเครื่องใช้และการใช้งานแยกตามเดือน ช่องที่ไม่ทราบเว้นว่างได้
+            รายการที่ยกเลิกจะยังเก็บประวัติไว้
+          </p>
+        </div>
+        <div class="month-bar">
+          <label for="billingMonth">เดือนที่บันทึกการใช้งาน</label
+          ><input type="month" id="billingMonth" required /><span
+            >แยกการใช้งานของแต่ละเดือน</span
+          >
+        </div>
+        <div class="summary-grid">
+          <div class="summary">
+            <span>รายการเครื่องใช้ในเดือนนี้</span
+            ><strong id="itemCount">0 <small>รายการ</small></strong>
+          </div>
+          <div class="summary">
+            <span>จำนวนเครื่องทั้งหมด</span
+            ><strong id="quantityTotal">0 <small>เครื่อง</small></strong>
+          </div>
+          <div class="summary accent">
+            <span>หน่วยไฟประมาณการในเดือนนี้</span
+            ><strong id="energyTotal">– <small>kWh</small></strong
+            ><small id="estimateCoverage">เพิ่มข้อมูลเพื่อเริ่มประมาณการ</small>
+          </div>
+        </div>
+        <div class="workspace">
+          <section class="panel form-panel">
+            <div class="panel-heading">
+              <span class="panel-icon">＋</span>
+              <div>
+                <h2 id="formTitle">เพิ่มเครื่องใช้ไฟฟ้า</h2>
+                <p>ข้อมูลเครื่องใช้และการใช้งานของเดือนที่เลือก</p>
+              </div>
+            </div>
+            <form id="applianceForm">
+              <div class="field">
+                <label for="applianceName">ชื่อเครื่องใช้ <span>*</span></label
+                ><input
+                  id="applianceName"
+                  maxlength="100"
+                  placeholder="เช่น แอร์ห้องนอน"
+                  required
+                />
+              </div>
+              <div class="field-grid">
+                <div class="field">
+                  <label for="category">ประเภท <span>*</span></label
+                  ><select id="category">
+                    <option value="air_conditioner">แอร์</option>
+                    <option value="refrigerator">ตู้เย็น</option>
+                    <option value="water_heater">เครื่องทำน้ำอุ่น</option>
+                    <option value="computer">คอมพิวเตอร์</option>
+                    <option value="fan">พัดลม</option>
+                    <option value="lighting">ไฟส่องสว่าง</option>
+                    <option value="washing_machine">เครื่องซักผ้า</option>
+                    <option value="television">โทรทัศน์</option>
+                    <option value="other">อื่น ๆ</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="quantity">จำนวนเครื่อง <span>*</span></label
+                  ><input
+                    id="quantity"
+                    type="number"
+                    min="1"
+                    max="1000"
+                    step="1"
+                    value="1"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="field" id="customCategoryField" hidden>
+                <label for="customCategory">ระบุประเภทอื่น ๆ <span>*</span></label>
+                <input id="customCategory" maxlength="100" placeholder="เช่น เครื่องเย็บผ้า หรือเครื่องอบรองเท้า" disabled>
+                <small>พิมพ์ประเภทที่ไม่มีในรายการได้โดยตรง</small>
+              </div>
+              <div class="field-grid">
+                <div class="field">
+                  <label for="brand">ยี่ห้อ</label
+                  ><input
+                    id="brand"
+                    maxlength="100"
+                    placeholder="ไม่จำเป็นต้องกรอก"
+                  />
+                </div>
+                <div class="field">
+                  <label for="model">รุ่น</label
+                  ><input
+                    id="model"
+                    maxlength="100"
+                    placeholder="ระบุรุ่น ถ้าทราบ"
+                  />
+                </div>
+              </div>
+              <div class="field">
+                <label for="ratedPower">กำลังไฟตามฉลากต่อเครื่อง (W)</label
+                ><input
+                  id="ratedPower"
+                  type="number"
+                  min="0.01"
+                  max="1000000"
+                  step="0.01"
+                  placeholder="กรอกเมื่อทราบกำลังไฟ"
+                /><small
+                  >เป็นข้อมูลของเครื่อง
+                  ไม่ถูกนำไปใช้แทนกำลังไฟเฉลี่ยโดยอัตโนมัติ</small
+                >
+              </div>
+              <div class="divider"></div>
+              <h3>วิธีประมาณการการใช้ไฟ</h3>
+              <div class="method-options">
+                <label
+                  ><input
+                    type="radio"
+                    name="method"
+                    value="average_power"
+                    checked
+                  /><span
+                    ><strong>กำลังไฟเฉลี่ย × เวลา</strong
+                    ><small>เมื่อทราบกำลังไฟเฉลี่ยขณะใช้งาน</small></span
+                  ></label
+                ><label
+                  ><input type="radio" name="method" value="monthly_kwh" /><span
+                    ><strong>หน่วยไฟต่อเดือน (kWh)</strong
+                    ><small>จากการวัด ฉลาก หรือข้อมูลผู้ผลิต</small></span
+                  ></label
+                >
+              </div>
+              <p id="cyclingHint" class="hint">
+                แอร์และตู้เย็นทำงานเป็นรอบ ควรใช้กำลังไฟเฉลี่ยที่วัดได้
+                หรือหน่วยไฟรายเดือน ไม่ใช้กำลังไฟสูงสุดคูณเวลาเปิดเครื่องตรง ๆ
+              </p>
+              <div id="averageFields">
+                <div class="field">
+                  <label for="averagePower">กำลังไฟเฉลี่ยต่อเครื่อง (W)</label
+                  ><input
+                    id="averagePower"
+                    type="number"
+                    min="0.01"
+                    max="1000000"
+                    step="0.01"
+                    placeholder="เว้นว่างได้ หากยังไม่ทราบ"
+                  />
+                </div>
+                <div class="field-grid">
+                  <div class="field">
+                    <label for="hours">ชั่วโมงใช้งานต่อวัน</label
+                    ><input
+                      id="hours"
+                      type="number"
+                      min="0"
+                      max="24"
+                      step="0.01"
+                      placeholder="เช่น 8"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="days">วันใช้งานในเดือนนี้</label
+                    ><input
+                      id="days"
+                      type="number"
+                      min="0"
+                      max="31"
+                      step="1"
+                      placeholder="เช่น 20"
+                    /><small id="daysHint"></small>
+                  </div>
+                </div>
+              </div>
+              <div id="monthlyFields" hidden>
+                <div class="field">
+                  <label for="monthlyKwh"
+                    >หน่วยไฟต่อเครื่องในเดือนนี้ (kWh)</label
+                  ><input
+                    id="monthlyKwh"
+                    type="number"
+                    min="0"
+                    max="1000000"
+                    step="0.0001"
+                    placeholder="เช่น 35.5"
+                  /><small
+                    >กรอกหน่วยไฟของเดือนที่เลือก
+                    ค่าต่อปีต้องแปลงเป็นค่าต่อเดือนก่อน</small
+                  >
+                </div>
+              </div>
+              <div class="field">
+                <label for="source">แหล่งที่มาของค่าประมาณ</label
+                ><select id="source">
+                  <option value="unknown">ยังไม่ทราบ</option>
+                  <option value="measured">วัดจากอุปกรณ์จริง</option>
+                  <option value="manufacturer">ข้อมูลผู้ผลิต</option>
+                  <option value="energy_label">ฉลากพลังงาน (หน่วยไฟ)</option>
+                  <option value="user_estimate">ประมาณด้วยตนเอง</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="notes">หมายเหตุ</label
+                ><textarea
+                  id="notes"
+                  rows="2"
+                  maxlength="500"
+                  placeholder="เช่น ตั้งแอร์ 26°C ใช้เฉพาะตอนกลางคืน"
+                ></textarea>
+              </div>
+              <div class="estimate-preview">
+                <div>
+                  <span>หน่วยไฟประมาณการรวมทุกเครื่อง</span
+                  ><strong id="previewKwh">– <small>kWh / เดือน</small></strong>
+                </div>
+                <p id="previewHint">กรอกข้อมูลการใช้งานเพื่อดูประมาณการ</p>
+              </div>
+              <p id="formError" class="error" role="alert" hidden></p>
+              <div class="form-actions">
+                <button class="primary" type="submit" id="submitButton">
+                  ＋ บันทึกเครื่องใช้และการใช้งาน</button
+                ><button type="button" class="secondary" id="resetButton">
+                  ล้างฟอร์ม
+                </button>
+              </div>
+            </form>
+          </section>
+          <section class="panel list-panel">
+            <div class="panel-heading">
+              <span class="panel-icon">▤</span>
+              <div>
+                <h2>เครื่องใช้ของเดือนนี้</h2>
+                <p id="listMonth">รายการที่คุณเพิ่มจะแสดงที่นี่</p>
+              </div>
+            </div>
+            <p id="feedback" role="status" hidden></p>
+            <div id="applianceList"></div>
+            <div id="emptyList" class="empty">
+              <span>◉</span>
+              <h3>เริ่มจากเครื่องใช้ที่คุณใช้บ่อย</h3>
+              <p>
+                เช่น แอร์ ตู้เย็น หรือคอมพิวเตอร์<br />เพิ่มรายการทางซ้ายเพื่อดูภาพรวมการใช้ไฟ
+              </p>
+            </div>
+            <div class="insight-note">
+              <strong>ข้อมูลที่ช่วยให้คำแนะนำตรงจุด</strong>
+              <p>
+                เมื่อเชื่อมระบบแล้ว ข้อมูลเครื่องใช้จะใช้ร่วมกับบิลค่าไฟเพื่อให้
+                AI วิเคราะห์
+                ประมาณการนี้อาจต่างจากมิเตอร์จริงและไม่ได้รวมเครื่องใช้ที่ยังไม่ได้เพิ่ม
+              </p>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+    <dialog id="cancelDialog" class="cancel-dialog" aria-labelledby="cancelDialogTitle" aria-describedby="cancelDialogDescription">
+      <div class="cancel-dialog-body">
+        <span class="cancel-dialog-icon" aria-hidden="true">!</span>
+        <h2 id="cancelDialogTitle">ยกเลิกรายการนี้?</h2>
+        <p id="cancelDialogDescription">รายการนี้จะไม่แสดงในรายการเครื่องใช้ของเดือนที่เลือก แต่ระบบจะยังเก็บประวัติไว้</p>
+        <div class="cancel-dialog-item"><strong id="cancelApplianceName"></strong><span id="cancelApplianceMonth"></span></div>
+        <form method="dialog" class="cancel-dialog-actions">
+          <button type="submit" value="back" class="secondary" autofocus>กลับ</button>
+          <button type="submit" value="confirm" class="cancel-confirm">ยืนยันยกเลิกรายการ</button>
+        </form>
+      </div>
+    </dialog>
+    <script src="/frontend/appliances/appliances.js?v=20261020-dialog-1"></script>
+  </body>
+</html>

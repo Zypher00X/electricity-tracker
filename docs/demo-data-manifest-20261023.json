@@ -1,0 +1,126 @@
+{
+  "version": "demo-20261023-v1",
+  "owner": "dd3e76ab-6478-4fb5-b055-08217ae80534",
+  "spreadsheet_id": "19AIuubmMQdYmT0XHY9xRg3fROLnmm0CBKS-0yZa2YTk",
+  "added_per_table": 24,
+  "usage_month": "2026-05",
+  "ranges": [
+    {
+      "sheet": "electricity_records",
+      "start_row": 7,
+      "end_row": 30,
+      "columns": 12
+    },
+    {
+      "sheet": "appliances",
+      "start_row": 6,
+      "end_row": 29,
+      "columns": 18
+    },
+    {
+      "sheet": "appliance_usage_monthly",
+      "start_row": 6,
+      "end_row": 29,
+      "columns": 26
+    }
+  ],
+  "ids": {
+    "electricity_records": [
+      "dfa76887-3bc9-5ef6-b102-04e90d46ece8",
+      "5277c4f1-2ff4-5723-b390-d6ea47fb61bb",
+      "bee0c9d9-9d3f-572f-b281-0a4767be6599",
+      "4e469043-45d7-5efa-8ff6-437782c98705",
+      "f4e3d3f5-209c-5f07-84eb-8c71b59a8db8",
+      "cced2d5b-69a3-5ce7-8d43-b12d99a2d91a",
+      "a26e17cf-c2f0-5a73-8717-b71979ae781d",
+      "a3d23eb1-4c30-5f22-9428-d062dd31a5a2",
+      "fab07456-adca-5ff6-b654-71ac947568cc",
+      "5764e08b-fd1e-5c48-b367-76b4b856b691",
+      "d8e00a2f-c805-56b7-8f80-f00370046990",
+      "aec9070c-cb6a-58e5-a9fc-a73a90413153",
+      "8234f229-16e3-53d8-bf9d-b820f35d8a7b",
+      "177a0892-4702-5497-baa6-440eadddb722",
+      "431ebca4-a91f-590e-970f-4d13cffa6d27",
+      "97583b40-2097-500b-a411-bb8999976a4a",
+      "57d1fd5e-3a9f-5c71-ad45-c616b5a29020",
+      "50697907-85ca-56a9-82fd-d38cf63ecb02",
+      "0fac861d-dfb6-501d-b295-f6d1f610646f",
+      "9345d458-72a3-5042-8ac4-2d3391437a22",
+      "b53a2e39-8836-5805-b91a-961d6009836d",
+      "105d4bd5-5f8a-5e08-9aef-57b7e17973f6",
+      "ca69e12a-c718-5887-9ef3-e8ed27dc5113",
+      "ccc7129b-4328-5127-9dd1-c6706926400b"
+    ],
+    "appliances": [
+      "515a06be-2c36-535f-b653-3c86588ada18",
+      "a3de892c-b025-52c2-8635-c90348d6582f",
+      "03275c1b-0fcc-51a5-8fbb-cef41f5c01d7",
+      "c6520766-4db6-557a-9e1e-52747cf2a918",
+      "80b65a56-943e-5e00-8a55-2521889e9f2d",
+      "022b6dfe-eb8f-5f16-afad-edeef921bcb5",
+      "58e28d4c-3f09-5d53-91be-1f62599de0da",
+      "727b5137-8460-5fed-9e6b-4c183a011165",
+      "92f42773-4416-5a94-9524-7ab35b66d7ff",
+      "719d58b6-07c2-5428-891b-a7f0d262399d",
+      "9cf4963f-dd4d-564f-889e-9182c9bcbfde",
+      "266ee907-8666-5d11-b216-6b77d2a9b84e",
+      "cc29850e-d44a-5e7d-a28c-27486d78ca19",
+      "3434386d-e487-5286-b23a-07ca9f55fad1",
+      "44da92a1-48c2-5e36-a59c-1a383c651060",
+      "1ebf8b35-637b-5074-8522-dbf237654a09",
+      "190665c4-7a8b-5c54-a50c-dd2fafcdcff8",
+      "394c2681-bea1-565c-b215-b8a16956a8f9",
+      "4f894a12-a592-538a-9497-a88708a7258a",
+      "2fc5fa60-c663-54fd-8b0a-e423a41f7c1e",
+      "4b0a595d-995d-58ef-bbd7-7bbf5e26d9b3",
+      "eea1f4dd-0805-5f76-bb09-145877eecf7c",
+      "c3f4853e-bce8-575f-9600-3e9fbefb5265",
+      "9a19244f-2107-582c-a48d-740154e10f5f"
+    ],
+    "appliance_usage_monthly": [
+      "742944a1-790f-5196-bfee-94652400b87c",
+      "d4956fa7-88b2-5e33-8697-bf0e16a11774",
+      "767f90e7-9374-5efa-823c-d7fdddcb4fa8",
+      "99a87e9e-62bd-516c-9df5-65d6c3808cee",
+      "aea874de-c304-5b98-a0b4-3f881f75ba91",
+      "3d418cb5-9eab-5057-8ca5-9f74d940c9ab",
+      "2ddbc446-fd7d-566c-b3f1-fbfe779d5675",
+      "816adb41-3015-5a2f-9f13-4cee8ceb1b0c",
+      "ac31da2d-7af7-5527-98e1-072414dec154",
+      "722164cb-e499-5e07-8c0f-8783ff987ecb",
+      "589ed227-2d12-539d-af73-9cf92ee4f984",
+      "a91e84dc-11bf-52c9-95e8-d43233456dcd",
+      "715517bb-8ef1-546c-86c4-2465e304e933",
+      "1b38abbc-693d-5052-8e30-d6dcd50df0b6",
+      "6e4ac459-ac11-5ee1-88cb-39de9e8ad04c",
+      "71b40820-ec45-591d-ab18-63c6b39b3ec4",
+      "0304a90b-44f3-58a4-bb3b-21759b086807",
+      "efbc1dda-8bc2-5e1c-94d9-ac4eb131c1bb",
+      "ad710e9c-e3ed-52b6-a5ad-8391e3d23ece",
+      "7be6d010-1a17-5709-893e-7371200b035e",
+      "318030c2-f8cd-5f48-94d9-4f37ce72665c",
+      "9f62848e-ca5f-5cfb-bda9-4186a0b256eb",
+      "e3b47e24-c291-58b4-a47f-25a3c4116e75",
+      "5164ada8-f5a7-51f7-b950-20d85c6b6d55"
+    ]
+  },
+  "summary": {
+    "known_kwh": "247.5500",
+    "known_items": 22,
+    "unknown_items": 2,
+    "zero_kwh_items": 1,
+    "focus_meter_kwh": 285
+  },
+  "original_hashes": [
+    "ef52fb9020e2f3196322cc92a4c0dfa975735bc5a6301da7ae04c421dad59263",
+    "33cfe78ca5028ebf9c0bc9882a651e3ea441a0846e2838587645eb9d77ad1e63",
+    "7b581ae6274071b19f6c01567926e1b78fe5bb9c9345918e1f1a216559e9745c"
+  ],
+  "verified": true,
+  "original_values_unchanged": true,
+  "final_counts": [
+    29,
+    28,
+    28
+  ]
+}

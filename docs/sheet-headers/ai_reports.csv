@@ -1,0 +1,1 @@
+report_id,user_id,billing_month,input_hash,input_snapshot_json,analysis_json,provider,model,prompt_version,calculation_version,created_at
