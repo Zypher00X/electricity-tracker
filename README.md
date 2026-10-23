@@ -73,6 +73,12 @@ flowchart TD
 
 ## โครงสร้างระบบ
 
+![System Architecture ของ PowerTrack พร้อมเส้นเชื่อมและคำอธิบายภาษาไทย](docs/images/powertrack-system-architecture-th.png)
+
+[เปิดภาพขนาดเต็ม](docs/images/powertrack-system-architecture-th.png) · [ดูบน Canva Whiteboard](https://canva.link/fgzy61256bel53j)
+
+แผนภาพแสดงการเชื่อมต่อจากผู้ใช้และหน้าเว็บ ผ่าน HTTPS บน Render ไปยัง FastAPI ซึ่งตรวจสิทธิ์และคำนวณข้อมูล ก่อนอ่าน/เขียน Google Sheets ใช้ Redis จัดการ session, โควตาและแคช และส่งข้อมูลสรุปเฉพาะบัญชีให้ Gemini เรียบเรียงคำแนะนำ พร้อมเส้นทาง Google OAuth การบันทึกรายงาน และการสร้างพร้อมท์สำหรับ AI ภายนอก
+
 ```mermaid
 flowchart LR
     U[Browser] -->|HTTPS| W[Render: FastAPI และ Frontend]
