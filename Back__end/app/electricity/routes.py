@@ -1,4 +1,6 @@
-from urllib.parse import urlsplit
+import os
+
+from app.core.http_security import origin as normalized_origin
 
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
 
@@ -16,9 +18,11 @@ def same_origin(request: Request):
     if request.headers.get("sec-fetch-site") == "cross-site":
         raise HTTPException(403, "ไม่อนุญาตคำขอจากเว็บไซต์อื่น")
     if origin:
-        source = urlsplit(origin)
-        target = urlsplit(str(request.base_url))
-        if (source.scheme, source.netloc) != (target.scheme, target.netloc):
+        source = normalized_origin(origin)
+        # Render terminates HTTPS before forwarding HTTP to the container.
+        # Use the configured public origin, never untrusted forwarded headers.
+        target = normalized_origin(os.getenv("PUBLIC_ORIGIN") or str(request.base_url))
+        if source is None or target is None or source != target:
             raise HTTPException(403, "ไม่อนุญาตคำขอจากเว็บไซต์อื่น")
     if request.headers.get("content-type", "").split(";", 1)[0].strip().lower() != "application/json":
         raise HTTPException(415, "กรุณาส่งข้อมูลแบบ application/json")
